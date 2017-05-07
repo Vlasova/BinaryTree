@@ -47,7 +47,7 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
         return true;
     }
 
-    boolean checkInvariant() {
+    public boolean checkInvariant() {
         return root == null || checkInvariant(root);
     }
 
@@ -67,12 +67,11 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
         Node<T> parent = findParent(node);
         if (parent == null) {
             root = delete(node);
+            size--;
             return true;
         }
         int comparison = node.value.compareTo(parent.value);
-        if (comparison == 0) {
-            return false;
-        }
+        assert comparison != 0;
         if (comparison < 0) {
             parent.left = delete(node);
         }
@@ -141,6 +140,9 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
             }
         }
         else {
+            if (node.left == null) {
+                return node.right;
+            }
             Node<T> minimumLeft = node.right;
             Node<T> minimumLeftParent = node;
             while (minimumLeft.left != null) {
@@ -148,7 +150,7 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
                 minimumLeft = minimumLeft.left;
             }
             minimumLeft.left = node.left;
-            if (!minimumLeftParent.equals(node)) {
+            if (minimumLeftParent != node) {
                 minimumLeftParent.left = minimumLeft.right;
                 minimumLeft.right = node.right;
             }

@@ -30,12 +30,18 @@ public class BinaryTreeTest {
         tree.remove(20);
         assertFalse(tree.contains(20));
         assertTrue(tree.contains(16));
+        assertEquals(12, tree.size());
         tree.remove(15);
         assertFalse(tree.contains(15));
         assertTrue(tree.contains(24));
+        assertEquals(11, tree.size());
+
+        //тест на случай, когда удаляется корень
         tree.remove(10);
         assertFalse(tree.contains(10));
         assertTrue(tree.contains(16));
+        assertEquals(10 ,tree.size());
         assertTrue(tree.checkInvariant());
     }
 }
+
